@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>For You</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#08111f;color:#fff;font-family:Georgia}
+canvas{position:fixed;inset:0}#moon{position:fixed;right:8%;top:8%;width:90px;height:90px;border-radius:50%;background:#f8f2d0;box-shadow:0 0 40px #fff8}
+.card{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:min(92%,720px);background:#ffffff18;border-radius:24px;padding:28px;backdrop-filter:blur(10px);text-align:center}
+button{padding:12px 18px;border-radius:99px;border:none}.hidden{display:none}
+</style></head><body><canvas id=c></canvas><div id=moon></div><div class=card><h2>🌧️ A Little Corner</h2><p id=t></p><button onclick="s.classList.remove('hidden')">🌸 Open the Letter</button><div id=s class=hidden><hr><p>You don't have to reply. I only wanted to leave a peaceful place that might make you smile today. 🌼<br><br>— Prince</p></div></div>
+<script>
+const txt=`No surprise. No expectations.\n\nJust a tiny corner of the internet...\n\nWhere the rain falls a little softer,\nand the flowers bloom a little brighter,\nbecause somewhere, you exist.\n\nIf today felt heavy, stay here for a while.`;
+let i=0;(function w(){if(i<=txt.length){t.innerText=txt.slice(0,i++);setTimeout(w,34)}})();
+let cv=c,ctx=cv.getContext('2d');function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();onresize=rs;
+let drops=[...Array(220)].map(()=>({x:Math.random()*cv.width,y:Math.random()*cv.height,l:8+Math.random()*18,v:6+Math.random()*5}));
+let petals=[...Array(35)].map(()=>({x:Math.random()*cv.width,y:Math.random()*cv.height,r:8+Math.random()*10,v:1+Math.random()*2}));
+function draw(){ctx.clearRect(0,0,cv.width,cv.height);ctx.strokeStyle='rgba(255,255,255,.35)';drops.forEach(d=>{ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-3,d.y+d.l);ctx.stroke();d.y+=d.v;d.x-=.7;if(d.y>cv.height){d.y=-20;d.x=Math.random()*cv.width}});
+petals.forEach(p=>{ctx.font=p.r+'px serif';ctx.fillText('🌸',p.x,p.y);p.y+=p.v;p.x+=Math.sin(p.y/40);if(p.y>cv.height+20){p.y=-20;p.x=Math.random()*cv.width}});
+requestAnimationFrame(draw)}draw();
+</script></body></html>
